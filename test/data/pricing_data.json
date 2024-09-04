@@ -1,0 +1,10 @@
+{
+    "numberOfInstances": "4",
+    "vmClass": "Regular",
+    "instanceType": "n1-standard-8 (vCPUs: 8, RAM: 30 GB)",
+    "gpuType": "NVIDIA Tesla V100",
+    "localSsd": "2x375 GB",
+    "datacenterLocation": "Frankfurt (europe-west3)",
+    "committedUsage": "1 Year",
+    "osList": "Free: Debian, CentOS, CoreOS, Ubuntu, or other User Provided OS"
+}
