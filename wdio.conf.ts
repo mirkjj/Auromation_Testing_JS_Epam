@@ -114,7 +114,10 @@ export const config: Options.Testrunner = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'mocha',
-    
+    suites: {
+        smoke: ['./test/specs/smoke/**/*.js'],
+        other: ['./test/specs/other/**/*.js'],
+    },
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -128,7 +131,18 @@ export const config: Options.Testrunner = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: [
+        ['spec', {
+            symbols: { passed: '[PASS]', failed: '[FAIL]' }
+        }]
+    ],
+    afterTest: async function (test, context, { error, result, duration, passed }) {
+        if (!passed) {
+            const timestamp = new Date().toISOString().replace(/:/g, '-');
+            const filePath = `./reports/screenshots/${test.title.replace(/\s+/g, '_')}-${timestamp}.png`;
+            await browser.saveScreenshot(filePath);
+        }
+    },
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
